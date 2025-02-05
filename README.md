@@ -1,4 +1,4 @@
-Aqui está o `README.md` em formato de mensagem normal para você:  
+
 
 ---
 
@@ -69,4 +69,3 @@ Este projeto está sob a licença MIT. Sinta-se à vontade para usar e modificar
 
 ---
 
-Agora está no formato que você queria. Se precisar de mais ajustes, me avise! 🚀
