@@ -7,10 +7,16 @@ public class Anotacao {
     private LocalDate data = LocalDate.now();
     private boolean deletado = false;
 
-    public Anotacao(int id, String texto)
+    public Anotacao(int id, String texto) throws Exception
     {
         this.id = id;
-        this.texto = texto;
+        if(texto == null || texto.trim().isEmpty())
+        {
+            throw new Exception("Anotação vazia");
+        }
+        else {
+            this.texto = texto;
+        }
     }
 
     public String getTexto() {

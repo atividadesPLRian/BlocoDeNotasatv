@@ -1,15 +1,19 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 public class BlocoDeNotas
 {
     List<Anotacao> anotacoes = new ArrayList<>();
 
 
-    public Anotacao adicionarAnotacao (String texto)
+    public Anotacao adicionarAnotacao(String texto) throws Exception
     {
-        if (!verificaSeJaExisteNaListaViaTexto(texto))
+        if(verificaSeJaExisteNaListaViaTexto(texto))
+        {
+            throw new Exception("Essa tarefa já existe");
+        }
+
+        else
         {
             int id = anotacoes.size() + 1;
             Anotacao novaAnotacao = new Anotacao(id, texto);
@@ -17,16 +21,20 @@ public class BlocoDeNotas
             return novaAnotacao;
         }
 
-        return null;
     }
 
-    public Anotacao editarAnotacao(int id, String texto)
+    public Anotacao editarAnotacao(int id, String texto) throws Exception
     {
-        if (verificaSeJaExisteNaLista(id))
+        if (!verificaSeJaExisteNaLista(id) || verificaAnotacaoRemovida(id))
+        {
+            throw new Exception("Essa anotação existe");
+
+        }
+        else
         {
             for (Anotacao anotacao : anotacoes)
             {
-                if (anotacao.getId() == id && !anotacao.getDeletado())
+                if (anotacao.getId() == id)
                 {
                     anotacao.setTexto(texto);
                     return anotacao;
@@ -36,13 +44,20 @@ public class BlocoDeNotas
         return null;
     }
 
-    public Anotacao buscaAnotacao(int id)
+    public Anotacao buscaAnotacao(int id) throws Exception
     {
-        if(verificaSeJaExisteNaLista(id))
+
+        if (!verificaSeJaExisteNaLista(id) || verificaAnotacaoRemovida(id))
+        {
+            throw new Exception("Essa anotação existe");
+
+        }
+
+        else
         {
             for(Anotacao anotacao: anotacoes)
             {
-                if(anotacao.getId() == id && !anotacao.getDeletado())
+                if(anotacao.getId() == id)
                 {
                     return anotacao;
                 }
@@ -77,13 +92,18 @@ public class BlocoDeNotas
         return listaAnotacoesNaoDeletadas;
     }
 
-    public void deletaAnotacao (int id)
+    public void deletaAnotacao (int id) throws Exception
     {
-        if(verificaSeJaExisteNaLista(id))
+        if (!verificaSeJaExisteNaLista(id) || verificaAnotacaoRemovida(id))
+        {
+            throw new Exception("Essa anotação existe");
+
+        }
+        else
         {
             for(Anotacao anotacao: anotacoes)
             {
-                if(anotacao.getId() == id && !anotacao.getDeletado())
+                if(anotacao.getId() == id)
                 {
                     anotacao.setDeletado();
                 }
@@ -91,7 +111,16 @@ public class BlocoDeNotas
         }
     }
 
-
+    private boolean verificaAnotacaoRemovida(int id) {
+        for (Anotacao anotacao : anotacoes)
+        {
+            if (anotacao.getId() == id && anotacao.getDeletado())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private boolean verificaSeJaExisteNaLista(int id)
     {
