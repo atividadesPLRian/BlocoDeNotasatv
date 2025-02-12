@@ -96,7 +96,7 @@ public class BlocoDeNotas
     {
         if (!verificaSeJaExisteNaLista(id) || verificaAnotacaoRemovida(id))
         {
-            throw new Exception("Essa anotação existe");
+            throw new Exception("Essa anotação não existe");
 
         }
         else
