@@ -31,7 +31,11 @@ public class Anotacao {
         return data;
     }
 
-    public void setTexto(String texto) {
+    public void setTexto(String texto) throws Exception {
+        if(texto == null || texto.trim().isEmpty())
+        {
+            throw new Exception("Anotação vazia");
+        }
         this.texto = texto;
     }
 
